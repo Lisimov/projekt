@@ -8,7 +8,7 @@ themesNameArr.forEach((theme, index) => {
     let liElement = document.createElement('li');
     liElement.classList = 'themes_button';
     // Добавляем обработчик клика для кнопки
-    liElement.innerHTML = `<a>${theme}</a>`;
+    liElement.innerHTML = `<button>${theme}</button>`;
     // Распределяем по колонкам
     listPlace.appendChild(liElement);
 });

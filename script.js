@@ -3,6 +3,7 @@ let currentPageIndex = 1;
 let currentTestIndex = null;
 const testContainer = document.getElementById('test-container');
 const contentDiv = document.getElementById('content');
+updatePage(0);
 console.log(contentDiv)
 allThemesButtons.forEach((button, index) => {
     button.onclick = function() {
@@ -36,12 +37,17 @@ function createTextWithImage(paragraph) {
             textElement.innerHTML = item.text; // Использование innerHTML для поддержки HTML-тегов
             container.appendChild(textElement);
         }
+        if (item.text2) {
+            const textElement = document.createElement('div');
+            textElement.innerHTML = item.text2; // Использование innerHTML для поддержки HTML-тегов
+            container.appendChild(textElement);
+        }
         // Если есть изображение, создаем и добавляем элемент изображения
         if (item.image) {
             const imgContainer = document.createElement('div');
             imgContainer.className = 'img_with_sgn';
             let imgElement;
-            if (item.image_path.includes(".jpg") || item.image_path.includes(".png")) {
+            if (item.image_path.includes(".jpg") || item.image_path.includes(".png") || item.image_path.includes(".svg")) {
                 imgElement = document.createElement('img');
                 imgElement.classList = 'zoomable';
             } else if (item.image_path.includes(".mp4")) {
@@ -79,7 +85,7 @@ function createOnlyImage(paragraph) {
         // Если есть изображение, создаем и добавляем элемент изображения
         if (item.image) {
             let imgElement;
-            if (item.image_path.includes(".jpg") || item.image_path.includes(".png")) {
+            if (item.image_path.includes(".jpg") || item.image_path.includes(".png") || item.image_path.includes(".svg")) {
                 imgElement = document.createElement('img');
                 imgElement.classList = 'zoomable';
             } else if (item.image_path.includes(".mp4")) {
@@ -117,6 +123,12 @@ function createPlainText(paragraph) {
         if (item.text) {
             const textElement = document.createElement('p');
             textElement.innerHTML = item.text; // Использование innerHTML для поддержки HTML-тегов
+            container.appendChild(textElement);
+        }
+
+        if (item.text2) {
+            const textElement = document.createElement('div');
+            textElement.innerHTML = item.text2; // Использование innerHTML для поддержки HTML-тегов
             container.appendChild(textElement);
         }
     });
@@ -161,6 +173,8 @@ function displayPage(index) {
                 } else if (paragraph.some(item => item.image)) {
                     element = createOnlyImage(paragraph);
                 } else if (paragraph.some(item => item.text)) {
+                    element = createPlainText(paragraph);
+                } else if (paragraph.some(item => item.text2)) {
                     element = createPlainText(paragraph);
                 }
                 // Добавление созданного элемента на страницу
